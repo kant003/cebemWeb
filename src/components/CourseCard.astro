@@ -1,0 +1,15 @@
+---
+
+interface Props {
+	title: string;
+	description: string;
+	img: string;
+    icon: string;
+}
+
+const { img, title, icon, description } = Astro.props;
+---
+<article>
+    <header>{title}</header>
+    <p>Page not found</p>
+</article>
