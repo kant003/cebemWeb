@@ -6,18 +6,33 @@ import CourseCard from "./CourseCard.astro";
 <section class="text-xl text-left text-pretty mx-auto my-24" >
 
     <h2 class="text-4xl text-white text-center uppercase text-wrap tracking-wide">Ciclo formativos de FP</h2>
-    <h4 class="text-xl text-white text-center">Te presentamos a continuación los ciclos formativos de FP que ofrece Cebem</h4>
+    <h4 class="text-xl text-white text-center text-wrap mb-10">Te presentamos a continuación los ciclos formativos de FP que ofrece Cebem</h4>
 
-    <div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mx-auto justify-center">
         <CourseCard
             title="Ciclo Grado Superior Desarrollo de Aplicaciones Multiplataforma"
-            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum."
-            img="/img/courses/daw.jpg"
+            description="Te permitirá trabajar desarrollando e implantando aplicaciones informáticas multiplataforma (móvil, web y de escritorio) en todas las empresas del sector."
+            img="/images/app-multiplataforma.jpg"
             icon="/cursos/daw"/>
         <CourseCard
             title="Ciclo Grado Superior Administración y Finanzas"
-            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum."
-            img="/img/courses/daw.jpg"
+            description="Te capacita para la organización, administración, gestión de personal, las operaciones económico-financieras, y la información y asesoramiento a clientes de cualquier empresa u organismo."
+            img="/images/admin-finanzas.jpg"
+            icon="/cursos/daw"/>
+        <CourseCard
+            title="Ciclo Grado Superior Asistencia a la Dirección"
+            description="Te capacita para organizar, gestionar y transmitir la información con destino a los órganos ejecutivos en lengua propia y/o extranjera, y representar y fomentar la cooperación en la empresa."
+            img="/images/asistencia_direccion.jpg"
+            icon="/cursos/daw"/>
+        <CourseCard
+            title="Ciclo Grado Superior Guía, Información y Asistencia Turística"   
+            description="Te preparamos para planificar, promocionar e informar sobre destinos turísticos, guiando y asistiendo a viajeros y clientes en los mismos, así como en terminales, medios de transporte y eventos."
+            img="/images/asistencia-turistica.jpg"
+            icon="/cursos/daw"/>
+        <CourseCard
+            title="Ciclo Grado Medio Gestión Administrativa"
+            description="Actividades de soporte administrativo en el ámbito laboral, contable, comercial, financiero y fiscal, así como de atención al cliente/usuario, tanto en empresas públicas como privadas."
+            img="/images/gestion_administrativa.jpg"
             icon="/cursos/daw"/>
     </div>
 </section>
