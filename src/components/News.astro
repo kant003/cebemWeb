@@ -1,0 +1,30 @@
+---
+import { contentfulClient } from "../lib/contentful";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import type { EntryFieldTypes } from "contentful";
+
+interface BlogPost {
+  contentTypeId: "blogPost",
+  fields: {
+    title: EntryFieldTypes.Text
+    slug: EntryFieldTypes.Text
+    content: EntryFieldTypes.RichText,
+  }
+}
+
+const entries = await contentfulClient.getEntries<BlogPost>({
+  content_type: "blogPost",
+});
+---
+
+<section>
+    <h1 class="text-2xl text-white">Últimas noticias</h1>
+
+    {entries.items.map((item) => (
+        <section>
+          <h2>{item.fields.title}</h2>
+          <article set:html={documentToHtmlString(item.fields.content)}></article>
+          <a href={`/news/${item.fields.slug}`} class="text-blue-500">Leer más</a>
+        </section>
+      ))}
+</section>

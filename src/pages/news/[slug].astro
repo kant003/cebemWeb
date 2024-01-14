@@ -1,0 +1,75 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { contentfulClient } from "../../lib/contentful";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import type { BlogPost } from "../../lib/contentful";
+
+export const prerender = false;
+
+
+let post;
+const { slug } = Astro.params;
+try {
+  const data = await contentfulClient.getEntries<BlogPost>({
+    content_type: "blogPost",
+    "fields.slug": slug,
+  });
+  const { title, date, content, cover, multimedia } = data.items[0].fields;
+  post = {
+    title,
+    cover,
+    multimedia,
+    date: new Date(date).toLocaleDateString(),
+    content: documentToHtmlString(content),
+
+  };
+} catch (error) {
+  return Astro.redirect("/404");
+}
+---
+
+<Layout title="Welcome to Astro." description="La web de cebem">
+	<main>
+		<h1>{post?.title}</h1>
+    <time>{post?.date}</time>
+    <article set:html={post?.content} />
+  
+        <div class="flex gap-4">
+    {post?.multimedia?.map((item) => {
+      if (item.fields.file.contentType.includes("image")) {
+        return (
+          <img
+            width={100}
+            src={item.fields.file.url}
+            alt={item.fields.title}
+            width={item.fields.file.details.image.width}
+            height={item.fields.file.details.image.height}
+          />
+        );
+      }
+      
+      if (item.fields.file.contentType.includes("video")) {
+        return (
+          <video
+            src={item.fields.file.url}
+            controls
+            width={item.fields.file.details.image.width}
+            height={item.fields.file.details.image.height}
+          />
+        );
+      }
+      if (item.fields.file.contentType.includes("pdf")) {
+        return (
+            <div class="p-5 border rounded">
+            <a class="" href={item.fields.file.url} target="_blank">Ver pdf</a>
+            </div>
+        );
+      }
+      return null;
+    })
+}
+</div>
+   <img src={post?.cover.fields.file.url} alt={post?.cover.fields.title} />
+	
+</main>
+</Layout>
