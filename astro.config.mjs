@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
-
 import tailwind from "@astrojs/tailwind";
+
+import netlify from "@astrojs/netlify";
 
 // https://astro.build/config
 export default defineConfig({
@@ -8,6 +9,7 @@ export default defineConfig({
   integrations: [tailwind()],
   i18n: {
     locales: ['en', 'es', 'gl'],
-    defaultLocale: 'es',
+    defaultLocale: 'es'
   },
+  adapter: netlify()
 });

@@ -1,4 +1,19 @@
 import contentful, { type EntryFieldTypes } from "contentful";
+export interface Cover2 {
+  fields: {
+    file: {
+      contentType: string;
+      url: string;
+      details: {
+        image: {
+          width: number;
+          height: number;
+        };
+      };
+    };
+    title: string;
+  };
+}
 
 export interface BlogPost {
   contentTypeId: "blogPost",
@@ -9,7 +24,38 @@ export interface BlogPost {
     description: EntryFieldTypes.Text,
     slug: EntryFieldTypes.Text,
     cover: EntryFieldTypes.AssetLink,
+   // categories: contentful.EntryFieldTypes.Array<
+   // contentful.EntryFieldTypes.EntryLink<CategoryEntrySkeleton>
+  //>
+    //categories: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<CategorySkeleton>>,
+
+    /*  cover: {
+      fields: {
+        file: {
+          contentType: string;
+          url: string;
+          details: {
+            image: {
+              width: number;
+              height: number;
+            };
+          };
+        };
+        title: string;
+      };
+    },  */
     multimedia: EntryFieldTypes.AssetLink[],
+  }
+}
+
+export interface PageBlogPost {
+  contentTypeId: "pageBlogPost",
+  fields: {
+    title: EntryFieldTypes.Text,
+    slug: EntryFieldTypes.Text,
+    content: EntryFieldTypes.RichText,
+    publishedDate: EntryFieldTypes.Date,
+
   }
 }
 
