@@ -1,0 +1,94 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { contentfulClient } from "@/lib/contentful";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import type { BlogPost } from "@/lib/contentful";
+import { type Asset, type AssetDetails } from "contentful";
+
+export const prerender = false;
+
+let post;
+let cover;
+let attachments;
+const { lang,  slug } = Astro.params;
+
+try {
+  const data = await contentfulClient.getEntries<BlogPost,'gl'>({
+    content_type: "blogPost",
+    "fields.slug": slug,
+    locale: lang,
+  });
+
+  const { title, date, content } = data.items[0].fields;
+  post = {
+    title,
+    date: new Date(date.es).toLocaleDateString(),
+    content: documentToHtmlString(content.es?.content),
+  };
+
+  cover = data.items[0].fields.cover as Asset<undefined, string>;
+  attachments = data.items[0].fields.multimedia as Asset<undefined, string>[];
+} catch (error) {
+  return Astro.redirect("/404");
+}
+---
+
+<Layout title="Welcome to Astro." description="La web de cebem">
+  <main>
+    <h1>{post?.title}</h1>
+    <time>{post?.date}</time>
+    <img width="100px" src={cover?.fields?.file?.url} />
+    <article set:html={post?.content} />
+   
+
+<div class="flex gap-5">
+    {
+      attachments?.map((item: Asset) => {
+        const file = item?.fields?.file;
+        const url = file?.url as string;
+        const title = item?.fields?.title as string;
+        const contentType = file?.contentType as string;
+        const details = file?.details as AssetDetails;
+        const width = details?.image?.width as number;
+        const height = details?.image?.height as number;
+
+        if (contentType?.includes("image")) {
+          return (
+            <img
+              width={100}
+              src={url}
+              alt={title}
+              width={width}
+              height={height}
+            />
+          );
+        }
+
+        if (contentType?.includes("video")) {
+          return <video src={url} controls width={width} height={height} />;
+        }
+
+        if (contentType?.includes("pdf")) {
+          return (
+            <div class="p-5 border rounded">
+              <a class="" href={url} target="_blank">
+                Ver pdf
+              </a>
+            </div>
+          );
+        }
+
+        return (
+          <div class="p-5 border rounded">
+            <a class="" href={url} target="_blank">
+              Descargar archivo
+            </a>
+          </div>
+        );
+      })
+    }
+  </div>
+
+
+  </main>
+</Layout>

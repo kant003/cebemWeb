@@ -7,6 +7,7 @@ import Info from '../components/Info.astro';
 import News from '../components/News.astro';
 import Characteristics from '../components/Characteristics.astro';
 import Contact from '../components/Contact.astro';
+const {currentLocale} = Astro;
 
 ---
 
@@ -16,6 +17,7 @@ import Contact from '../components/Contact.astro';
 		<Menu/>
 		<Courses/>
 		<Info/>
+		<a href={`/${currentLocale}/p`}>estatica</a>
 		<section>
 			<News/>
 			<Characteristics/>

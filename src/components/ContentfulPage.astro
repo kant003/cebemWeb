@@ -1,14 +1,21 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { contentfulClient } from "../lib/contentful";
+import { contentfulClient } from "@/lib/contentful";
 import { BLOCKS } from "@contentful/rich-text-types";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
-import type { PageBlogPost } from "../lib/contentful";
+import type { PageBlogPost } from "@/lib/contentful";
+
+
+interface Props {
+	id: string;
+}
+
+const { id } = Astro.props;
+
+const {currentLocale} = Astro;
 
 let post;
 try {
-
-
 
     
 const renderOptions = {
@@ -85,7 +92,8 @@ const renderOptions = {
 
   const data = await contentfulClient.getEntries<PageBlogPost>({
     content_type: "pageBlogPost",
-    "fields.slug": 'creating-sustainable-cities-and-the-role-of-green-urbanism',
+    "fields.slug": id,
+	locale: currentLocale,
   });
 
   const { title, publishedDate, content } = data.items[0].fields;
@@ -105,6 +113,7 @@ const renderOptions = {
 
 <Layout title="Welcome to Astro." description="La web de cebem">
 	<main>
+		{currentLocale}
     <h1>{post?.title}</h1>
      <time>{post?.publishedDate}</time>
      <div  class="prose">

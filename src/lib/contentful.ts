@@ -44,7 +44,7 @@ export interface BlogPost {
         title: string;
       };
     },  */
-    multimedia: EntryFieldTypes.AssetLink[],
+    multimedia: EntryFieldTypes.Array<EntryFieldTypes.AssetLink>,
   }
 }
 

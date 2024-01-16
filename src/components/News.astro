@@ -3,6 +3,8 @@ import { contentfulClient } from "../lib/contentful";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import type { EntryFieldTypes } from "contentful";
 
+const {currentLocale} = Astro;
+
 interface BlogPost {
   contentTypeId: "blogPost",
   fields: {
@@ -24,7 +26,7 @@ const entries = await contentfulClient.getEntries<BlogPost>({
         <section>
           <h2>{item.fields.title}</h2>
           <article set:html={documentToHtmlString(item.fields.content)}></article>
-          <a href={`/news/${item.fields.slug}`} class="text-blue-500">Leer más</a>
+          <a href={`${currentLocale}/news/${item.fields.slug}`} class="text-blue-500">Leer más</a>
         </section>
       ))}
 </section>
