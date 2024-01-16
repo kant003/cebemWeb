@@ -1,32 +1,79 @@
 ---
 import { contentfulClient } from "../lib/contentful";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
-import type { EntryFieldTypes } from "contentful";
+import type { BlogPost } from "@/lib/contentful";
+import { type Asset, type AssetDetails } from "contentful";
 
-const {currentLocale} = Astro;
+const { currentLocale } = Astro;
+let post;
+let cover;
+let attachments;
+const { lang, slug } = Astro.params;
 
-interface BlogPost {
+/* interface BlogPost {
   contentTypeId: "blogPost",
   fields: {
     title: EntryFieldTypes.Text
     slug: EntryFieldTypes.Text
     content: EntryFieldTypes.RichText,
   }
-}
+} */
+let data;
+let date;
+try {
+  data = await contentfulClient.getEntries<BlogPost>({
+    content_type: "blogPost",
+    "fields.slug": slug,
+    locale: lang,
+  });
 
-const entries = await contentfulClient.getEntries<BlogPost>({
-  content_type: "blogPost",
-});
+  cover = data.items[0].fields.cover as Asset<undefined, string>;
+
+  date= new Date(data.items[0].fields.date).toLocaleDateString()
+
+
+} catch (error) {
+  return Astro.redirect("/404");
+}
 ---
 
 <section>
-    <h1 class="text-2xl text-white">Últimas noticias</h1>
-
-    {entries.items.map((item) => (
-        <section>
-          <h2>{item.fields.title}</h2>
-          <article set:html={documentToHtmlString(item.fields.content)}></article>
-          <a href={`${currentLocale}/news/${item.fields.slug}`} class="text-blue-500">Leer más</a>
-        </section>
-      ))}
+  <h1 class="text-2xl text-white">Últimas noticias</h1>
+  <!--      -->
+  {
+    data.items.map((item: any) => (
+      <div>
+        <a
+          href="#"
+          class="flex flex-col items-start md:flex-row md:max-w-xl hover:bg-gray-100 "
+        >
+          <img
+            class="object-cover w-3 rounded-t-lg md:w-40 md:h-40 md:rounded-none md:rounded-s-lg"
+            src={cover?.fields?.file?.url}
+            alt=""
+          />
+          <div class="flex flex-col justify-start items-start p-4 leading-normal">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+              {item.fields.title}
+            </h5>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              {documentToHtmlString(item.fields.content).replace(
+                /(<([^>]+)>)/gi,
+                ""
+              )}
+            </p>
+            <time>
+              {date}
+              </time>
+          </div>
+          <a
+            href={`${currentLocale}/news/${item.fields.slug}`}
+            class="text-blue-500"
+          >
+            Leer más
+          </a>
+        </a>
+      </div>
+    ))
+  }
 </section>

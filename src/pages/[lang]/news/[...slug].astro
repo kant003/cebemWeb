@@ -13,7 +13,7 @@ let attachments;
 const { lang,  slug } = Astro.params;
 
 try {
-  const data = await contentfulClient.getEntries<BlogPost,'gl'>({
+  const data = await contentfulClient.getEntries<BlogPost>({
     content_type: "blogPost",
     "fields.slug": slug,
     locale: lang,
