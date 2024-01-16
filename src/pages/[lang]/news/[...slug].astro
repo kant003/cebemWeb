@@ -22,8 +22,8 @@ try {
   const { title, date, content } = data.items[0].fields;
   post = {
     title,
-    date: new Date(date.es).toLocaleDateString(),
-    content: documentToHtmlString(content.es?.content),
+    date: new Date(date).toLocaleDateString(),
+    content: documentToHtmlString(content),
   };
 
   cover = data.items[0].fields.cover as Asset<undefined, string>;
