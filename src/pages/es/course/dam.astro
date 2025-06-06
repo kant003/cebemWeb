@@ -1,0 +1,53 @@
+---
+import C from './C.astro'
+import Icon from '@/components/icon.astro';
+//const { default: innerHTML } = await import(`./svgs/brand-instagram.svg?raw`);
+
+const data =  {
+    "img":"/images/app-multiplataforma.jpg",
+    "title":"Ciclo Superior en desarrollo de aplicaciones multiplataforma",
+    "description":"El Ciclo Formativo de Grado Superior DAM (Desarrollo de Aplicaciones Multiplataforma), te permitirá trabajar desarrollando, implantando, documentando y manteniendo aplicaciones informáticas multiplataforma (movil, web y de escritorio) en todas las empresas del sector.",
+    "characteristics": [
+        {'icon':'calendar-clock', 'value':'Horario:Mañanas'},
+        {'icon':'clock', 'value':'Duración: 2.000 horas (2 cursos académicos)'},
+        {'icon':'medal', 'value':'Título: Título de Técnico Superior en Desenvolvemento de Aplicacións Multiplataforma'},
+        {'icon':'asterisk', 'value':'Tipo: Concertado'},
+        {'icon':'brand-stackoverflow', 'value':'Familia: Informática y comunicaciones.'},
+    ],
+    "toTrain":"La competencia general de este título consiste en desarrollar, implantar, documentar y mantener aplicaciones informáticas multiplataforma (movil, web y escritorio), utilizando tecnologías y entornos de desarrollo específicos, garantizando el acceso a los datos de manera segura y cumpliendo los criterios de usabilidad y calidad exigidos en los estándares establecidos.",
+    "position":`
+    aaa
+    <br>
+    <ol class="flex flex-col gap-5">
+        <li>
+            Las personas con este perfil profesional ejercen su actividad en entidades públicas o privadas de cualquiera tamaño, tanto por cuenta ajena como por cuenta propia, y desempeñan su trabajo en el área de desarrollo de aplicaciones informáticas multiplataforma en diversos ámbitos:
+            <ul class="pl-5">
+                <li>gestión empresarial y de negocio, relaciones con clientes, educación, ocio, dispositivos móviles y entretenimiento.</li>
+                <li>aplicaciones desarrolladas e implantadas en entornos de alcance intranet, extranet e Internet.</li>
+                <li>e implantación y adaptación de sistemas de planificación de recursos empresariales y de gestión de relaciones con clientes.</li>
+            </ul>
+        </li>
+        <li>
+            Las ocupaciones y los puestos de trabajo más salientables son los siguientes:
+            <ul class="pl-5">
+                <li>Desarrollar aplicaciones informáticas y videojuegos para móviles, tablets y aplicaciones de escritorio de propósito general en distintos sistemas operativos; creación de servicios en red en segundo plano; diseño de bases de datos y desarrollo de sistemas ERP para la gestión empresarial y de negocio.</li>
+                <li>Desenvolvedor/ora de aplicaciones informáticas para la gestión empresarial y de negocio.</li>
+                <li>Desenvolvedor/ora de aplicaciones de propósito general.</li>
+                <li>Desenvolvedor/ora de aplicaciones en el ámbito del entretenimiento y la informática móvil.</li>
+            </ul>
+        </li>
+    </ol>
+
+    
+    `,
+    "modules1":[
+        {title:"aaa", link:"/"},
+    ]
+    
+}
+
+---
+
+<div>
+    <C course={data}/>
+</div>

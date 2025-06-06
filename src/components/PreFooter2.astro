@@ -1,0 +1,35 @@
+---
+import { getLangFromUrl, useTranslations } from '../lib/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section class="bg-blue-700 text-white py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h2 class="text-3xl font-bold mb-4">
+          ¿Listo para comenzar tu formación?
+        </h2>
+        <p class="text-blue-100 text-lg">
+          Únete a miles de estudiantes que han transformado su futuro profesional con nosotros.
+        </p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a 
+          href={`/${lang === 'es' ? 'cursos' : `${lang}/courses`}`}
+          class="bg-white text-blue-700 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors text-center"
+        >
+          Ver Cursos
+        </a>
+        <a 
+          href="#contacto"
+          class="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-700 transition-colors text-center"
+        >
+          Contactar
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

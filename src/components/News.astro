@@ -5,9 +5,6 @@ import type { BlogPost } from "@/lib/contentful";
 import { type Asset, type AssetDetails } from "contentful";
 
 const { currentLocale } = Astro;
-let post;
-let cover;
-let attachments;
 const { lang, slug } = Astro.params;
 
 /* interface BlogPost {
@@ -18,23 +15,23 @@ const { lang, slug } = Astro.params;
     content: EntryFieldTypes.RichText,
   }
 } */
-let data;
-let date;
-try {
-  data = await contentfulClient.getEntries<BlogPost>({
+let cover : any;
+let post: any;
+let DEFAULT_URL_IMG = 'https://p.turbosquid.com/ts-thumb/VP/4zuDwr/8K8vxa7P/nyb/jpg/1309299891/600x600/fit_q87/da2fa3ed980c06fe6200bb0f5c68cd4c583d2b94/nyb.jpg'
+  const data = await contentfulClient.getEntries<BlogPost>({
     content_type: "blogPost",
     "fields.slug": slug,
     locale: lang,
   });
 
+  const { title, date, content } = data.items[0].fields;
+  post = {
+    title,
+    date: new Date(date).toLocaleDateString(),
+    content: documentToHtmlString(content),
+  };
+
   cover = data.items[0].fields.cover as Asset<undefined, string>;
-
-  date= new Date(data.items[0].fields.date).toLocaleDateString()
-
-
-} catch (error) {
-  return Astro.redirect("/404");
-}
 ---
 
 <section>
@@ -49,9 +46,10 @@ try {
         >
           <img
             class="object-cover w-3 rounded-t-lg md:w-40 md:h-40 md:rounded-none md:rounded-s-lg"
-            src={cover?.fields?.file?.url}
+            src={item.fields.cover ? (item.fields.cover as Asset<undefined, string>).fields?.file?.url : DEFAULT_URL_IMG}
             alt=""
           />
+          
           <div class="flex flex-col justify-start items-start p-4 leading-normal">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               {item.fields.title}
@@ -63,7 +61,7 @@ try {
               )}
             </p>
             <time>
-              {date}
+              {post?.date}
               </time>
           </div>
           <a
