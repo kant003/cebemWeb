@@ -1,6 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { contentfulClient } from "@/lib/contentful";
+import { contentfulClient, getNoticiaBySlug } from "@/lib/contentful";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import type { BlogPost } from "@/lib/contentful";
 import { type Asset, type AssetDetails } from "contentful";
@@ -12,38 +12,22 @@ let cover;
 let attachments;
 const { lang,  slug } = Astro.params;
 
-try {
-  const data = await contentfulClient.getEntries<BlogPost>({
-    content_type: "blogPost",
-    "fields.slug": slug,
-    locale: lang,
-  });
 
-  const { title, date, content } = data.items[0].fields;
-  post = {
-    title,
-    date: new Date(date).toLocaleDateString(),
-    content: documentToHtmlString(content),
-  };
-
-  cover = data.items[0].fields.cover as Asset<undefined, string>;
-  attachments = data.items[0].fields.multimedia as Asset<undefined, string>[];
-} catch (error) {
-  return Astro.redirect("/404");
-}
+  const noticia = await getNoticiaBySlug(slug || '', lang)
+  
 ---
 
 <Layout title="Welcome to Astro." description="La web de cebem">
   <main>
-    <h1>{post?.title}</h1>
-    <time>{post?.date}</time>
-    <img width="100px" src={cover?.fields?.file?.url} />
-    <article set:html={post?.content} />
+    <h1>{noticia?.titulo}</h1>
+    <time>{noticia?.fechaPublicacion}</time>
+    <img width="100px" src={noticia?.portada?.fields?.file?.url} />
+    <article set:html={noticia?.contenido} />
    
 
 <div class="flex gap-5">
     {
-      attachments?.map((item: Asset) => {
+      noticia?.multimedia?.map((item: Asset) => {
         const file = item?.fields?.file;
         const url = file?.url as string;
         const title = item?.fields?.title as string;

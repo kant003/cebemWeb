@@ -1,7 +1,7 @@
 // src/lib/i18n.ts
 export const languages = {
   es: 'Español',
-  en: 'English'
+  gl: 'Galego'
 };
 
 export const defaultLang = 'es';
@@ -26,7 +26,7 @@ export const ui = {
     'footer.followUs': 'Síguenos',
     'footer.rights': 'Todos los derechos reservados'
   },
-  en: {
+  gl: {
     'nav.home': 'Home',
     'nav.news': 'News',
     'nav.courses': 'Courses',
