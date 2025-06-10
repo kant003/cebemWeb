@@ -1,20 +1,14 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { contentfulClient, getNoticiaBySlug } from "@/lib/contentful";
+import {  getNoticiaBySlug } from "@/lib/contentful";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
-import type { BlogPost } from "@/lib/contentful";
 import { type Asset, type AssetDetails } from "contentful";
 
 export const prerender = false;
 
-let post;
-let cover;
-let attachments;
 const { lang,  slug } = Astro.params;
 
-
-  const noticia = await getNoticiaBySlug(slug || '', lang)
-  
+const noticia = await getNoticiaBySlug(slug || '', lang)
 ---
 
 
@@ -35,7 +29,7 @@ const { lang,  slug } = Astro.params;
           <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
           </svg>
-          <span class="text-gray-600">{noticia?.titulo}</span>
+          <span class="text-gray-600">{noticia?.fields.titulo}</span>
         </nav>
       </div>
     </section>
@@ -46,21 +40,26 @@ const { lang,  slug } = Astro.params;
         <div class="text-center mb-8">
           <div class="text-blue-600 font-semibold text-sm mb-2">
             
-            {new Date(noticia?.fechaPublicacion || '').toLocaleDateString('es-ES', { 
-              year: 'numeric', 
-              month: 'long', 
-              day: 'numeric' 
-            })}
+          {new Date(noticia?.fields.fechaPublicacion as string).toLocaleDateString('es-ES', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
           </div>
           <h1 class="text-3xl lg:text-5xl font-bold text-gray-900 mb-6">
-            {noticia?.titulo}
+            {noticia?.fields.titulo}
           </h1>
           <div class="flex items-center justify-center space-x-4 text-sm text-gray-500">
             <div class="flex items-center">
               <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              Publicado el {new Date(noticia?.fechaPublicacion || '').toLocaleDateString('es-ES')}
+              Publicado el 
+              {new Date(noticia?.fields.fechaPublicacion as string).toLocaleDateString('es-ES', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
             </div>
             <div class="flex items-center">
               <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -76,11 +75,11 @@ const { lang,  slug } = Astro.params;
     <!-- Featured Image Section -->
     <section class="py-8 bg-gray-50">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {noticia?.portada ? (
+        {noticia?.fields.portada ? (
           <div class="rounded-lg overflow-hidden shadow-lg">
             <img 
-              src={`https:${noticia.portada.fields.file.url}`}
-              alt={noticia.titulo}
+             src={`https:${(noticia?.fields.portada as Asset)?.fields?.file?.url}`}
+              alt={noticia.fields.titulo as string }
               class="w-full h-64 lg:h-96 object-cover"
             />
           </div>
@@ -99,18 +98,24 @@ const { lang,  slug } = Astro.params;
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="prose prose-lg max-w-none">
           <div class="text-lg text-gray-700 leading-relaxed">
-            {noticia?.contenido }
-          </div>
+
+            {noticia?.fields?.contenido &&
+            <article set:html={documentToHtmlString(noticia?.fields?.contenido)} />
+            }
+
+        </div>
+
+          
           
           {/* Multimedia Section */}
-          {noticia?.multimedia && (
+          {noticia?.fields.multimedia && (
             <div class="mt-12 p-6 bg-gray-50 rounded-lg">
               <h3 class="text-xl font-bold text-gray-900 mb-4">Contenido multimedia</h3>
               <div class="grid gap-4">
                 {/* Aquí se renderizaría el contenido multimedia */}
-                <div class="bg-white rounded-lg p-4 shadow-sm flex gap-5">
+                <div class="bg-white text-red-500 rounded-lg p-4 shadow-sm flex gap-5">
                     {
-      noticia?.multimedia?.map((item: Asset) => {
+      noticia?.fields.multimedia?.map((item) => {
         const file = item?.fields?.file;
         const url = file?.url as string;
         const title = item?.fields?.title as string;

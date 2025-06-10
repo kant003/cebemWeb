@@ -1,5 +1,5 @@
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
-import contentful, { type EntryFieldTypes, type Entry, type Asset, type EntryFields, type EntrySkeletonType } from "contentful";
+import contentful, { type EntryFieldTypes, type Entry, type Asset, type EntryFields, type EntrySkeletonType, type AssetLink } from "contentful";
 
 
 export interface Cover2 {
@@ -69,26 +69,8 @@ export interface BlogPost {
  */
 
 
-export interface NoticiaFields {
-  titulo: EntryFields.Text;
-  slug: EntryFields.Text;
-  fechaPublicacion: EntryFields.Date;
-  contenido: EntryFields.RichText;
-  portada: Asset;
-  multimedia?: Asset[];
-}
-
-export interface NoticiaPlano {
-  titulo: string;
-  slug: string;
-  fechaPublicacion: string;
-  contenido: any;
-  portada: any;
-  multimedia?: any;
-}
-
-type NoticiaSkeleton = EntrySkeletonType<NoticiaFields, "noticia">;
-type Noticia = Entry<NoticiaSkeleton>;
+//type NoticiaSkeleton = EntrySkeletonType<NoticiaFields, "noticia">;
+//type Noticia = Entry<NoticiaSkeleton>;
 
 export interface PageBlogPost {
   contentTypeId: "pageBlogPost",
@@ -123,7 +105,7 @@ let DEFAULT_URL_IMG = 'https://p.turbosquid.com/ts-thumb/VP/4zuDwr/8K8vxa7P/nyb/
 
 
 
-
+/* 
 export async function getNoticiaBySlug(slug: string, locale: string = 'es'): Promise<NoticiaPlano | null> {
   try {
     const response = await contentfulClient.getEntries({
@@ -149,32 +131,101 @@ export async function getNoticiaBySlug(slug: string, locale: string = 'es'): Pro
     return null;
   }
 }
+ */
+/* 
+export interface NoticiaEntryType {
+  contentTypeId: 'noticia';
+  fields: {
+    titulo:  EntryFieldTypes.Text;
+    slug: string;
+    fechaPublicacion: string;
+    contenido: any;
+    //autor?: string;
+    //destacada?: boolean;
+    portada?: AssetLink
 
-  
+      multimedia?: any;
+  };
+}
+export type NoticiaEntry = Entry<NoticiaEntryType>;
+ */
 
 
-  export async function getNoticias(locale: string = 'es'): Promise<NoticiaPlano[]> {
-    try {
-      const response = await contentfulClient.getEntries({
-        content_type: 'noticia',
-        locale: locale,
-        //order: '-fields.publishDate'
-      });
-      
-      return response.items.map((item) => ({
-        titulo: item.fields.titulo,
-        slug: item.fields.slug,
-        fechaPublicacion: item.fields.fechaPublicacion,
-        contenido:  item.fields.contenido,
-        portada: item.fields.portada,
-      }));
+/* export interface NoticiaPlano {
+  titulo: string;
+  slug: string;
+  fechaPublicacion: string;
+  contenido: string;
+  portada?: Asset;
+  multimedia?: Asset[];
+} */
 
-      // return response.items;
-    } catch (error) {
-      console.error('Error fetching news:', error);
-      return [];
-    }
+// SOLUCIÓN: Define el tipo correctamente usando EntrySkeletonType
+export interface NoticiaFields {
+  titulo: EntryFieldTypes.Text;
+  slug: EntryFieldTypes.Text;
+  fechaPublicacion: EntryFieldTypes.Date;
+  contenido: EntryFieldTypes.RichText;
+  portada?: EntryFieldTypes.AssetLink;
+  multimedia?: EntryFieldTypes.Array<EntryFieldTypes.AssetLink>;
+}
+
+export type NoticiaSkeleton = EntrySkeletonType<NoticiaFields, 'noticia'>;
+export type NoticiaEntry = Entry<NoticiaSkeleton>;
+
+
+export async function getNoticias2(limit: number = 1,locale: string = 'es') : Promise<NoticiaEntry[]>{
+  try {
+    const response = await contentfulClient.getEntries<NoticiaSkeleton>({
+      content_type: 'noticia', // Cambia por el ID de tu content type
+      order: ['-fields.fechaPublicacion'],
+      locale: locale,
+      limit: limit
+    });
+    
+
+    return response.items;
+  } catch (error) {
+    console.error('Error al obtener noticias:', error);
+    return [];
   }
+}
+
+
+export async function getNoticiaBySlug(slug: string, locale: string = 'es') {
+  try {
+    const response = await contentfulClient.getEntries<NoticiaSkeleton>({
+      content_type: 'noticia',
+      'fields.slug': slug,
+      locale: locale,
+      limit: 1
+    });
+    
+    return response.items[0] || null;
+  } catch (error) {
+    console.error('Error al obtener noticia:', error);
+    return null;
+  }
+}
+
+
+export async function getNoticiasDestacadas() {
+  try {
+    const response = await contentfulClient.getEntries<NoticiaSkeleton>({
+      content_type: 'noticia',
+      'fields.destacada': true,
+      order: ['-fields.fechaPublicacion'],
+      limit: 5
+    });
+    
+    return response.items;
+  } catch (error) {
+    console.error('Error al obtener noticias destacadas:', error);
+    return [];
+  }
+}
+
+
   
 export const contentfulClient = contentful.createClient({
   space: import.meta.env.CONTENTFUL_SPACE_ID,
@@ -184,3 +235,4 @@ export const contentfulClient = contentful.createClient({
   environment: import.meta.env.CONTENTFUL_ENVIRONMENT || 'master',
   host: import.meta.env.DEV ? "preview.contentful.com" : "cdn.contentful.com",
 });
+

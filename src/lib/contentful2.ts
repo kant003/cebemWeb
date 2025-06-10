@@ -19,6 +19,26 @@ export const contentfulClient = contentful.createClient({
   environment: contentfulConfig.environment
 });
 
+
+export interface CourseReal {
+  titulo: string;
+  descripcion: string;
+  horario:string;
+  duracion:string;
+  titulacion_obtenida: string;
+  tipo: string;
+  familia:string;
+  en_que_te_formamos:string;
+  puesto_a_desempenar:string;
+  competencias:string;
+  objetivos: string;
+  salidas_laborales:string;
+  acceso_otros_estudios:string;
+  requisitos_acceso_ciclos_superiores:string;
+  modulos_primer_curso:string;
+  modulos_segundo_curso:string;
+
+}
 // Tipos para el contenido
 export interface Course {
   title: string;
