@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sage - Plataforma Educativa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset y estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background-color: #ffffff;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Botones modernos */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: #667eea;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 700;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Header moderno */
+        header {
+            padding: 20px 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            text-decoration: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #667eea;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .search-box {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-input {
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-btn {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #4a5568;
+        }
+
+        /* Hero Section mejorado */
+        .hero {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23667eea" opacity="0.05"/><circle cx="75" cy="75" r="1" fill="%23764ba2" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-image {
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image:hover {
+            transform: perspective(1000px) rotateY(0deg);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #1a1a1a 0%, #4a5568 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            color: #4a5568;
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* Cards mejoradas */
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Grids responsivos */
+        .grid {
+            display: grid;
+            gap: 32px;
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-5 {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        /* Courses Section */
+        .courses {
+            background: #f7fafc;
+        }
+
+        .course-card {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .course-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .course-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .course-card:hover .course-image img {
+            transform: scale(1.05);
+        }
+
+        .course-content {
+            padding: 24px;
+        }
+
+        .course-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+            line-height: 1.3;
+        }
+
+        .course-text {
+            font-size: 14px;
+            color: #4a5568;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Features Section */
+        .features {
+            background: #fff;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 40px 24px;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+        }
+
+        .feature-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: #fff;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1a1a1a;
+        }
+
+        .feature-text {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        /* Services Section */
+        .services {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #000000;
+        }
+
+        .services .section-title {
+            color: #fff;
+            /*-webkit-text-fill-color: #fff;*/
+        }
+
+        .service-card {
+            text-align: center;
+            padding: 32px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .service-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .service-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            
+        }
+
+        .service-text {
+            font-size: 14px;
+            
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .service-card .btn-outline {
+            
+            border-color: rgba(255, 255, 255, 0.3);
+            background: transparent;
+        }
+
+        .service-card .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: #f7fafc;
+        }
+
+        .testimonial-card {
+            background: #fff;
+            padding: 32px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 24px;
+            font-size: 60px;
+            color: #667eea;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        .testimonial-stars {
+            color: #fbbf24;
+            margin-bottom: 16px;
+            font-size: 18px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .testimonial-position {
+            font-size: 14px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .testimonial-company {
+            font-size: 12px;
+            color: #4a5568;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+            color: #fff;
+        }
+
+        .newsletter-content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding-bottom: 20px;
+            padding-top: 10px;
+            text-align: center;
+        }
+
+        .newsletter-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .newsletter-text {
+            margin-bottom: 32px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 16px 20px;
+            border: none;
+            background: transparent;
+            color: #fff;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .newsletter-btn {
+            padding: 16px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 30px auto 0;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 16px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Footer moderno */
+        footer {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 60px 0 30px;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .footer-text {
+            color: #a0aec0;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .footer-contact {
+            color: #a0aec0;
+            margin-bottom: 8px;
+        }
+
+        .footer-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #a0aec0;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #667eea;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #2d3748;
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #a0aec0;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-bottom-links a {
+            color: #a0aec0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #667eea;
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .grid-3 {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+            
+            .grid-5 {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+                gap: 32px;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-image {
+                order: -1;
+                transform: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 24px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+                border-radius: 0 0 16px 16px;
+                gap: 16px;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .search-box {
+                display: none;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .hero {
+                padding: 80px 0;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .grid-3,
+            .grid-5 {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                max-width: 300px;
+            }
+
+            .newsletter-input {
+                border-radius: 12px 12px 0 0;
+            }
+
+            .newsletter-btn {
+                border-radius: 0 0 12px 12px;
+            }
+        }
+
+        /* Mejoras adicionales */
+        .section:nth-child(even) {
+            background: #f7fafc;
+        }
+
+        .section:nth-child(odd) {
+            background: #fff;
+        }
+
+        /* Loading animation */
+        .loading {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Focus styles */
+        *:focus {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/letra_c_y_pixeles_dispersos-MyNmHYrBSl4LvOlppgdsKUlebNpLuX.png" alt="Cebem Logo" style="height: 40px;">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#sobre-nosotros">Sobre Nosotros</a></li>
+                <li><a href="#cursos">Cursos</a></li>
+                <li><a href="#soluciones">Soluciones</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Buscar cursos...">
+                <button class="search-btn">Buscar</button>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text animate-on-scroll">
+                    <h1>Impulsa tu futuro con nuestros cursos</h1>
+                    <p>En nuestra empresa, ofrecemos formación de alta calidad en las áreas más demandadas del mercado laboral. Nuestros cursos están diseñados para proporcionarte las habilidades y conocimientos necesarios para destacar en tu carrera profesional.</p>
+                    <div class="hero-buttons">
+                        <a href="#cursos" class="btn">Explorar Cursos</a>
+                        <a href="#sobre-nosotros" class="btn btn-outline">Conocer Más</a>
+                    </div>
+                </div>
+                <div class="hero-image animate-on-scroll">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/chicos_estudiando-gXsHY6RLD5DYNoBgjtB6BvVCznjooF.png" alt="Estudiantes aprendiendo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="section courses" id="cursos">
+        <div class="container">
+            <h2 class="section-title text-center animate-on-scroll">Descubre nuestros cursos de formación profesional</h2>
+            <div class="grid grid-3">
+                <div class="course-card animate-on-scroll">
+                    <div class="course-image">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/profesional_chico-kvAVxNglxzOWGCU0UVqbI3UBbKgx4y.png" alt="Administración y Finanzas">
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Ciclo Grado Superior Administración y Finanzas</h3>
+                        <p class="course-text">Obtén las habilidades más demandadas para destacar en el mundo empresarial</p>
+                        <a href="#" class="btn btn-outline">Más información</a>
+                    </div>
+                </div>
+                <div class="course-card animate-on-scroll">
+                    <div class="course-image">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/desarrollando_una_app_movil-G7k7S5IVC2FH9Z3Di06oMBeWZFLDQR.png" alt="Desarrollo de Apps">
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Ciclo Grado Superior Desarrollo de Apps multiplataforma</h3>
+                        <p class="course-text">Aprende a crear aplicaciones móviles y web con las tecnologías más actuales</p>
+                        <a href="#" class="btn btn-outline">Más información</a>
+                    </div>
+                </div>
+                <div class="course-card animate-on-scroll">
+                    <div class="course-image">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/profesional_chico-kvAVxNglxzOWGCU0UVqbI3UBbKgx4y.png" alt="Asistencia a la Dirección">
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Ciclo Grado Superior Asistencia a la Dirección</h3>
+                        <p class="course-text">Fórmate como profesional polivalente en gestión, comunicación y apoyo directo a la alta dirección empresarial.</p>
+                        <a href="#" class="btn btn-outline">Más información</a>
+                    </div>
+                </div>
+                <div class="course-card animate-on-scroll">
+                    <div class="course-image">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/profesional_mujer-mmRU3mC7nAswBk46rFrAmP0XbO6yQV.png" alt="Gestión Administrativa">
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Ciclo Grado Medio Gestión Administrativa</h3>
+                        <p class="course-text">Te preparamos para realizar tareas de apoyo administrativo en empresas y organizaciones.</p>
+                        <a href="#" class="btn btn-outline">Más información</a>
+                    </div>
+                </div>
+                <div class="course-card animate-on-scroll">
+                    <div class="course-image">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/profesional_chico-kvAVxNglxzOWGCU0UVqbI3UBbKgx4y.png" alt="IA y Minería de Datos">
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Curso sobre IA y Minería de Datos</h3>
+                        <p class="course-text">Aprenderás a extraer conocimiento valioso a partir de grandes volúmenes de datos.</p>
+                        <a href="#" class="btn btn-outline">Más información</a>
+                    </div>
+                </div>
+                <div class="course-card animate-on-scroll">
+                    <div class="course-image">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/turismo-9VOyhSWyXoJanu1OYNXaZKOpvNq8y3.png" alt="Inglés Avanzado">
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Curso Inglés Avanzado</h3>
+                        <p class="course-text">Diseñado para personas con conocimientos intermedios que desean avanzar en su dominio del idioma.</p>
+                        <a href="#" class="btn btn-outline">Más información</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features" id="sobre-nosotros">
+        <div class="container">
+            <h2 class="section-title text-center animate-on-scroll">Características Clave de Nuestros Cursos</h2>
+            <div class="grid grid-3">
+                <div class="card feature-card animate-on-scroll">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Aprendizaje Práctico y Actualizado</h3>
+                    <p class="feature-text">Metodología enfocada en la práctica con contenidos siempre actualizados a las últimas tendencias del mercado.</p>
+                    <a href="#" class="btn btn-outline">Conocer más</a>
+                </div>
+                <div class="card feature-card animate-on-scroll">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 8v4l3 3"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Expertos en el Campo a Tu Lado</h3>
+                    <p class="feature-text">Nuestros cursos son impartidos por profesionales con años de experiencia en el sector.</p>
+                    <a href="#" class="btn btn-outline">Conocer más</a>
+                </div>
+                <div class="card feature-card animate-on-scroll">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Flexibilidad en el Aprendizaje</h3>
+                    <p class="feature-text">Adaptamos nuestros cursos para que puedas aprender a tu ritmo y según tu disponibilidad.</p>
+                    <a href="#" class="btn btn-outline">Conocer más</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section services" id="soluciones">
+        <div class="container">
+            <h2 class="section-title text-center animate-on-scroll">Nuestros Servicios</h2>
+            <div class="grid grid-5">
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">📚</div>
+                    <h3 class="service-title">Aprendizaje Flexible</h3>
+                    <p class="service-text">Metodología adaptada a diferentes estilos de aprendizaje</p>
+                    <a href="#" class="btn btn-outline">Conocer más</a>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🔄</div>
+                    <h3 class="service-title">Soporte Continuo</h3>
+                    <p class="service-text">Equipo disponible para resolver tus dudas</p>
+                    <a href="#" class="btn btn-outline">Conocer más</a>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🤝</div>
+                    <h3 class="service-title">Comunidad</h3>
+                    <p class="service-text">Conecta con otros profesionales</p>
+                    <a href="#" class="btn btn-outline">Conocer más</a>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🌐</div>
+                    <h3 class="service-title">Acceso Global</h3>
+                    <p class="service-text">Plataforma disponible 24/7</p>
+                    <a href="#" class="btn btn-outline">Conocer más</a>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🎓</div>
+                    <h3 class="service-title">Orientado al Empleo</h3>
+                    <p class="service-text">Programas según demandas del mercado</p>
+                    <a href="#" class="btn btn-outline">Conocer más</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section testimonials">
+        <div class="container">
+            <h2 class="section-title text-center animate-on-scroll">Testimonios de Nuestros Alumnos</h2>
+            <p class="text-center animate-on-scroll" style="margin-bottom: 48px; color: #4a5568;">Descubre lo que dicen nuestros estudiantes sobre su experiencia</p>
+            <div class="grid grid-3">
+                <div class="testimonial-card animate-on-scroll">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">La formación que ofrecen ha cambiado mi carrera profesional por completo. Los profesores son excelentes y el contenido muy actualizado.</p>
+                    <p class="testimonial-author">Laura Martínez</p>
+                    <p class="testimonial-position">Directora de Marketing Digital</p>
+                    <p class="testimonial-company">🏢 MediaTech</p>
+                </div>
+                <div class="testimonial-card animate-on-scroll">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">Los cursos son muy completos y prácticos. Me ayudaron a conseguir el trabajo que siempre quise en el sector tecnológico.</p>
+                    <p class="testimonial-author">Carlos Ruiz</p>
+                    <p class="testimonial-position">Desarrollador Full Stack</p>
+                    <p class="testimonial-company">🏢 WebSolutions</p>
+                </div>
+                <div class="testimonial-card animate-on-scroll">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">Gracias a la formación, conseguí mi trabajo soñado. La metodología es excelente y muy práctica.</p>
+                    <p class="testimonial-author">Ana Pérez</p>
+                    <p class="testimonial-position">Analista de Datos</p>
+                    <p class="testimonial-company">🏢 DataInsights</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contacto">
+        <div class="container">
+            <h2 class="section-title text-center animate-on-scroll">Contacta con Nosotros</h2>
+            <p class="text-center animate-on-scroll" style="margin-bottom: 48px; color: #4a5568;">¿Tienes dudas o necesitas más información? Escríbenos y te responderemos lo antes posible.</p>
+            <form class="contact-form animate-on-scroll">
+                <div class="form-group">
+                    <input type="text" name="nombre" placeholder="Tu nombre" required>
+                    <input type="email" name="email" placeholder="Tu correo electrónico" required>
+                    <input type="text" name="asunto" placeholder="Asunto">
+                    <textarea name="mensaje" rows="5" placeholder="Tu mensaje" required></textarea>
+                    <button type="submit" class="btn">Enviar Mensaje</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content animate-on-scroll">
+                <h2 class="newsletter-title">¡Únete a Nuestra Comunidad!</h2>
+                <p class="newsletter-text">Suscríbete para recibir las últimas novedades sobre nuestros cursos, eventos y ofertas especiales.</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Tu correo electrónico" required>
+                    <button type="submit" class="newsletter-btn">Suscribirse</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-info">
+                    <a href="#" class="footer-logo">CEBEM</a>
+                    <p class="footer-text">Centro Autorizado y Concertado por la Consejería de Educación. Formamos profesionales del futuro con la mejor calidad educativa.</p>
+                    <p class="footer-contact">📧 secretaria@cebem.net</p>
+                    <p class="footer-contact">📞 986 419899</p>
+                    <p class="footer-contact">📍 Vía Hispanidade, 33 Vigo 36203</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon">f</a>
+                        <a href="#" class="social-icon">t</a>
+                        <a href="#" class="social-icon">in</a>
+                        <a href="#" class="social-icon">ig</a>
+                        <a href="#" class="social-icon">yt</a>
+                    </div>
+                </div>
+                <div class="footer-links-column">
+                    <h3 class="footer-title">Sobre Nosotros</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Quiénes somos</a></li>
+                        <li><a href="#">Nuestro equipo</a></li>
+                        <li><a href="#">Metodología</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-column">
+                    <h3 class="footer-title">Cursos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Grado Superior</a></li>
+                        <li><a href="#">Grado Medio</a></li>
+                        <li><a href="#">Cursos Especializados</a></li>
+                        <li><a href="#">Formación a Empresas</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-column">
+                    <h3 class="footer-title">Información</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Preguntas frecuentes</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">Términos y condiciones</a></li>
+                        <li><a href="#">Política de cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 CEBEM Formación. Todos los derechos reservados.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Política de privacidad</a>
+                    <a href="#">Términos de uso</a>
+                    <a href="#">Política de cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menú móvil mejorado
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            
+            // Cambiar icono del menú
+            if (navMenu.classList.contains('active')) {
+                mobileMenuBtn.innerHTML = '✕';
+            } else {
+                mobileMenuBtn.innerHTML = '☰';
+            }
+        });
+
+        // Cerrar menú al hacer clic en un enlace
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                mobileMenuBtn.innerHTML = '☰';
+            });
+        });
+
+        // Animaciones al hacer scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        // Observar todos los elementos con la clase animate-on-scroll
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header con efecto al hacer scroll
+        let lastScrollTop = 0;
+        const header = document.querySelector('header');
+
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Scrolling down
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                // Scrolling up
+                header.style.transform = 'translateY(0)';
+            }
+            
+            // Cambiar opacidad del header
+            if (scrollTop > 50) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+
+        // Smooth scroll para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Formulario de contacto
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simular envío
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+            
+            btn.textContent = 'Enviando...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.textContent = '¡Mensaje Enviado!';
+                btn.style.background = 'linear-gradient(135deg, #48bb78 0%, #38a169 100%)';
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                    btn.style.background = '';
+                    this.reset();
+                }, 2000);
+            }, 1500);
+        });
+
+        // Newsletter
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btn = this.querySelector('.newsletter-btn');
+            const originalText = btn.textContent;
+            
+            btn.textContent = 'Suscribiendo...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.textContent = '¡Suscrito!';
+                btn.style.background = 'linear-gradient(135deg, #48bb78 0%, #38a169 100%)';
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                    btn.style.background = '';
+                    this.reset();
+                }, 2000);
+            }, 1500);
+        });
+
+        // Efecto parallax sutil en el hero
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const heroImage = document.querySelector('.hero-image');
+            if (heroImage) {
+                heroImage.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+        });
+
+        // Contador animado (si hay números)
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                element.textContent = Math.floor(current);
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                }
+            }, 20);
+        }
+
+        // Inicializar animaciones cuando la página carga
+        window.addEventListener('load', function() {
+            document.body.classList.add('loading');
+        });
+    </script>
+</body>
+</html>

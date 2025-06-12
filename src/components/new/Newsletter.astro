@@ -1,16 +1,44 @@
----
-// src/components/Newsletter.astro
----
-
 <section class="newsletter">
-    <div class="container">
-        <div class="newsletter-content animate-on-scroll">
-            <h2 class="newsletter-title">¡Únete a Nuestra Comunidad!</h2>
-            <p class="newsletter-text">Suscríbete para recibir las últimas novedades sobre nuestros cursos, eventos y ofertas especiales.</p>
-            <form class="newsletter-form">
-                <input type="email" class="newsletter-input" placeholder="Tu correo electrónico" required>
-                <button type="submit" class="newsletter-btn">Suscribirse</button>
-            </form>
-        </div>
+  <div class="container">
+    <div class="newsletter-content animate-on-scroll">
+      <h2 class="newsletter-title">¡Únete a Nuestra Comunidad!</h2>
+      <p class="newsletter-text">
+        Suscríbete para recibir las últimas novedades sobre nuestros cursos, eventos y ofertas especiales.
+      </p>
+      <form class="newsletter-form" id="newsletterForm">
+        <input
+          type="email"
+          class="newsletter-input"
+          placeholder="Tu correo electrónico"
+          required
+        />
+        <button type="submit" class="newsletter-btn">Suscribirse</button>
+      </form>
     </div>
+  </div>
+
+  <script type="module" is:inline>
+    const form = document.getElementById("newsletterForm");
+    const btn = form?.querySelector(".newsletter-btn");
+
+    form?.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const originalText = btn.textContent;
+      btn.textContent = "Suscribiendo...";
+      btn.disabled = true;
+
+      setTimeout(() => {
+        btn.textContent = "¡Suscrito!";
+        btn.style.background = "linear-gradient(135deg, #48bb78 0%, #38a169 100%)";
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.disabled = false;
+          btn.style.background = "";
+          form.reset();
+        }, 2000);
+      }, 1500);
+    });
+  </script>
 </section>

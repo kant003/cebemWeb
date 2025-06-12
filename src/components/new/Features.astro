@@ -1,46 +1,50 @@
 ---
-// src/components/Features.astro
 const features = [
-    {
-        title: "Aprendizaje Práctico y Actualizado",
-        description: "Metodología enfocada en la práctica con contenidos siempre actualizados a las últimas tendencias del mercado.",
-        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-               </svg>`
-    },
-    {
-        title: "Expertos en el Campo a Tu Lado",
-        description: "Nuestros cursos son impartidos por profesionales con años de experiencia en el sector.",
-        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 8v4l3 3"></path>
-               </svg>`
-    },
-    {
-        title: "Flexibilidad en el Aprendizaje",
-        description: "Adaptamos nuestros cursos para que puedas aprender a tu ritmo y según tu disponibilidad.",
-        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                <path d="M2 17l10 5 10-5"></path>
-                <path d="M2 12l10 5 10-5"></path>
-               </svg>`
-    }
+  {
+    titulo: "Aprendizaje Práctico y Actualizado",
+    descripcion: "Metodología enfocada en la práctica con contenidos siempre actualizados a las últimas tendencias del mercado.",
+    enlace: "#",
+    icono: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>`
+  },
+  {
+    titulo: "Expertos en el Campo a Tu Lado",
+    descripcion: "Nuestros cursos son impartidos por profesionales con años de experiencia en el sector.",
+    enlace: "#",
+    icono: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 8v4l3 3"></path>
+            </svg>`
+  },
+  {
+    titulo: "Flexibilidad en el Aprendizaje",
+    descripcion: "Adaptamos nuestros cursos para que puedas aprender a tu ritmo y según tu disponibilidad.",
+    enlace: "#",
+    icono: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+              <path d="M2 17l10 5 10-5"></path>
+              <path d="M2 12l10 5 10-5"></path>
+            </svg>`
+  },
 ];
 ---
 
 <section class="section features" id="sobre-nosotros">
-    <div class="container">
-        <h2 class="section-title text-center animate-on-scroll">Características Clave de Nuestros Cursos</h2>
-        <div class="grid grid-3">
-            {features.map((feature) => (
-                <div class="card feature-card animate-on-scroll">
-                    <div class="feature-icon" set:html={feature.icon}></div>
-                    <h3 class="feature-title">{feature.title}</h3>
-                    <p class="feature-text">{feature.description}</p>
-                    <a href="#" class="btn btn-outline">Conocer más</a>
-                </div>
-            ))}
+  <div class="container">
+    <h2 class="section-title text-center animate-on-scroll">
+      Características Clave de Nuestros Cursos
+    </h2>
+    <div class="grid grid-3">
+      {features.map((feature) => (
+        <div class="card feature-card animate-on-scroll">
+          <div class="feature-icon" set:html={feature.icono}></div>
+          <h3 class="feature-title">{feature.titulo}</h3>
+          <p class="feature-text">{feature.descripcion}</p>
+          <a href={feature.enlace} class="btn btn-outline">Conocer más</a>
         </div>
+      ))}
     </div>
+  </div>
 </section>

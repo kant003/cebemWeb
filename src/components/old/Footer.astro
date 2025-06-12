@@ -12,11 +12,13 @@ const currentYear = new Date().getFullYear();
       <!-- Logo y descripción -->
       <div class="md:col-span-2">
         <div class="flex items-center space-x-3 mb-4">
-          <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-            <span class="text-white font-bold text-xl">FP</span>
-          </div>
+            <img
+        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/letra_c_y_pixeles_dispersos-MyNmHYrBSl4LvOlppgdsKUlebNpLuX.png"
+        alt="Cebem Logo"
+         style="height: 40px; filter: brightness(0) invert(1);"
+      />
           <div>
-            <h3 class="text-xl font-bold">Centro FP</h3>
+            <h3 class="text-xl font-bold">Cebem</h3>
             <p class="text-gray-400 text-sm">Formación Profesional</p>
           </div>
         </div>
@@ -96,11 +98,45 @@ const currentYear = new Date().getFullYear();
       </div>
     </div>
     
-    <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+    <div class="footer-bottom border-t border-gray-800 mt-8 pt-8 text-center">
       <p class="text-gray-400">
-        © {currentYear} Centro FP. {t('footer.rights')}.
+        © {currentYear} CEBEM. {t('footer.rights')}.
       </p>
+      <div class="footer-bottom-links">
+        <a href="#">Política de privacidad</a>
+        <a href="#">Términos de uso</a>
+        <a href="#">Política de cookies</a>
+      </div>
     </div>
   </div>
+  
 </footer>
           
+
+
+<style>
+  .footer-bottom {
+            border-top: 1px solid #2d3748;
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #a0aec0;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-bottom-links a {
+            color: #a0aec0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #667eea;
+        }
+
+</style>

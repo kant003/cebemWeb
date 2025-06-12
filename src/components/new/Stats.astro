@@ -1,0 +1,95 @@
+---
+const stats = [
+  { label: "Porcentaje de inserción", value: 90 },
+  { label: "Empresas Colaboradoras", value: 110 },
+  { label: "Alumnos Formados", value: 1200 },
+  { label: "Años de Experiencia", value: 50 },
+];
+---
+
+<section class="stats">
+  <div class="container">
+<!--     <h2 class="section-title text-center animate-on-scroll">Nuestro Impacto</h2>
+ -->    <div class="stats-row">
+      {stats.map((stat) => (
+        <div class="stat-card animate-on-scroll">
+          <div class="stat-value" data-target={stat.value}>{stat.value}</div>
+          <div class="stat-label">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <script type="module" is:inline>
+    const counters = document.querySelectorAll(".stat-value");
+
+    const animateCounter = (el, target) => {
+      let current = 0;
+      const increment = Math.max(1, target / 60);
+      const update = () => {
+        current += increment;
+        if (current >= target) {
+          el.textContent = target;
+        } else {
+          el.textContent = Math.floor(current);
+          requestAnimationFrame(update);
+        }
+      };
+      update();
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const target = +entry.target.getAttribute("data-target");
+            animateCounter(entry.target, target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    counters.forEach((el) => observer.observe(el));
+  </script>
+</section>
+
+<style>
+  .stats {
+    padding: 20px 0;
+    background: transparent;
+  }
+
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+  }
+
+  .stat-card {
+    text-align: center;
+    border: none;
+  }
+
+  .stat-value {
+    font-size: 40px;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 16px;
+    color: #4a5568;
+  }
+
+  @media (max-width: 768px) {
+    .stats-row {
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+  }
+</style>

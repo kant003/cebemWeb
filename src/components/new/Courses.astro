@@ -1,61 +1,68 @@
 ---
-// src/components/Courses.astro
-const courses = [
-    {
-        title: "Ciclo Grado Superior Administración y Finanzas",
-        description: "Obtén las habilidades más demandadas para destacar en el mundo empresarial",
-        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/profesional_chico-kvAVxNglxzOWGCU0UVqbI3UBbKgx4y.png",
-        alt: "Administración y Finanzas"
-    },
-    {
-        title: "Ciclo Grado Superior Desarrollo de Apps multiplataforma",
-        description: "Aprende a crear aplicaciones móviles y web con las tecnologías más actuales",
-        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/desarrollando_una_app_movil-G7k7S5IVC2FH9Z3Di06oMBeWZFLDQR.png",
-        alt: "Desarrollo de Apps"
-    },
-    {
-        title: "Ciclo Grado Superior Asistencia a la Dirección",
-        description: "Fórmate como profesional polivalente en gestión, comunicación y apoyo directo a la alta dirección empresarial.",
-        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/profesional_chico-kvAVxNglxzOWGCU0UVqbI3UBbKgx4y.png",
-        alt: "Asistencia a la Dirección"
-    },
-    {
-        title: "Ciclo Grado Medio Gestión Administrativa",
-        description: "Te preparamos para realizar tareas de apoyo administrativo en empresas y organizaciones.",
-        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/profesional_mujer-mmRU3mC7nAswBk46rFrAmP0XbO6yQV.png",
-        alt: "Gestión Administrativa"
-    },
-    {
-        title: "Curso sobre IA y Minería de Datos",
-        description: "Aprenderás a extraer conocimiento valioso a partir de grandes volúmenes de datos.",
-        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/profesional_chico-kvAVxNglxzOWGCU0UVqbI3UBbKgx4y.png",
-        alt: "IA y Minería de Datos"
-    },
-    {
-        title: "Curso Inglés Avanzado",
-        description: "Diseñado para personas con conocimientos intermedios que desean avanzar en su dominio del idioma.",
-        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/turismo-9VOyhSWyXoJanu1OYNXaZKOpvNq8y3.png",
-        alt: "Inglés Avanzado"
-    }
+const cursos = [
+  {
+    titulo: "Ciclo Grado Superior Administración y Finanzas",
+    descripcion: "Obtén las habilidades más demandadas para destacar en el mundo empresarial",
+    imagen: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/profesional_chico-kvAVxNglxzOWGCU0UVqbI3UBbKgx4y.png",
+    alt: "Administración y Finanzas",
+    enlace: "#"
+  },
+  {
+    titulo: "Ciclo Grado Superior Desarrollo de Apps multiplataforma",
+    descripcion: "Aprende a crear aplicaciones móviles y web con las tecnologías más actuales",
+    imagen: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/desarrollando_una_app_movil-G7k7S5IVC2FH9Z3Di06oMBeWZFLDQR.png",
+    alt: "Desarrollo de Apps",
+    enlace: "#"
+  },
+  {
+    titulo: "Ciclo Grado Superior Asistencia a la Dirección",
+    descripcion: "Fórmate como profesional polivalente en gestión, comunicación y apoyo directo a la alta dirección empresarial.",
+    imagen: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/profesional_chico-kvAVxNglxzOWGCU0UVqbI3UBbKgx4y.png",
+    alt: "Asistencia a la Dirección",
+    enlace: "#"
+  },
+  {
+    titulo: "Ciclo Grado Medio Gestión Administrativa",
+    descripcion: "Te preparamos para realizar tareas de apoyo administrativo en empresas y organizaciones.",
+    imagen: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/profesional_mujer-mmRU3mC7nAswBk46rFrAmP0XbO6yQV.png",
+    alt: "Gestión Administrativa",
+    enlace: "#"
+  },
+  {
+    titulo: "Curso sobre IA y Minería de Datos",
+    descripcion: "Aprenderás a extraer conocimiento valioso a partir de grandes volúmenes de datos.",
+    imagen: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/profesional_chico-kvAVxNglxzOWGCU0UVqbI3UBbKgx4y.png",
+    alt: "IA y Minería de Datos",
+    enlace: "#"
+  },
+  {
+    titulo: "Curso Inglés Avanzado",
+    descripcion: "Diseñado para personas con conocimientos intermedios que desean avanzar en su dominio del idioma.",
+    imagen: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/turismo-9VOyhSWyXoJanu1OYNXaZKOpvNq8y3.png",
+    alt: "Inglés Avanzado",
+    enlace: "#"
+  },
 ];
 ---
 
 <section class="section courses" id="cursos">
-    <div class="container">
-        <h2 class="section-title text-center animate-on-scroll">Descubre nuestros cursos de formación profesional</h2>
-        <div class="grid grid-3">
-            {courses.map((course) => (
-                <div class="course-card animate-on-scroll">
-                    <div class="course-image">
-                        <img src={course.image} alt={course.alt}>
-                    </div>
-                    <div class="course-content">
-                        <h3 class="course-title">{course.title}</h3>
-                        <p class="course-text">{course.description}</p>
-                        <a href="#" class="btn btn-outline">Más información</a>
-                    </div>
-                </div>
-            ))}
+  <div class="container">
+    <h2 class="section-title text-center animate-on-scroll">
+      Descubre nuestros cursos de formación profesional
+    </h2>
+    <div class="grid grid-3">
+      {cursos.map((curso) => (
+        <div class="course-card animate-on-scroll">
+          <div class="course-image">
+            <img src={curso.imagen} alt={curso.alt} />
+          </div>
+          <div class="course-content">
+            <h3 class="course-title">{curso.titulo}</h3>
+            <p class="course-text">{curso.descripcion}</p>
+            <a href={curso.enlace} class="btn btn-outline">Más información</a>
+          </div>
         </div>
+      ))}
     </div>
+  </div>
 </section>
