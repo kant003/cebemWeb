@@ -1,6 +1,6 @@
 ---
 // src/components/Header.astro
-import { getLangFromUrl, useTranslations, languages } from '../lib/i18n';
+import { getLangFromUrl, useTranslations, languages } from '../../lib/i18n';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);

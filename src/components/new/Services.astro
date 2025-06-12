@@ -1,0 +1,46 @@
+---
+// src/components/Services.astro
+const services = [
+    {
+        title: "Aprendizaje Flexible",
+        description: "Metodología adaptada a diferentes estilos de aprendizaje",
+        icon: "📚"
+    },
+    {
+        title: "Soporte Continuo",
+        description: "Equipo disponible para resolver tus dudas",
+        icon: "🔄"
+    },
+    {
+        title: "Comunidad",
+        description: "Conecta con otros profesionales",
+        icon: "🤝"
+    },
+    {
+        title: "Acceso Global",
+        description: "Plataforma disponible 24/7",
+        icon: "🌐"
+    },
+    {
+        title: "Orientado al Empleo",
+        description: "Programas según demandas del mercado",
+        icon: "🎓"
+    }
+];
+---
+
+<section class="section services" id="soluciones">
+    <div class="container">
+        <h2 class="section-title text-center animate-on-scroll">Nuestros Servicios</h2>
+        <div class="grid grid-5">
+            {services.map((service) => (
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">{service.icon}</div>
+                    <h3 class="service-title">{service.title}</h3>
+                    <p class="service-text">{service.description}</p>
+                    <a href="#" class="btn btn-outline">Conocer más</a>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>

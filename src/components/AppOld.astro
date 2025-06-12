@@ -1,0 +1,320 @@
+---
+import { getNoticias2 } from '@/lib/contentful';
+import Layout from '../layouts/Layout.astro';
+const {currentLocale} = Astro;
+console.log(currentLocale)
+//import { getCourses, getNews } from '../lib/contentful2';
+
+/*
+<Menu/>
+		<Video/>
+		<Courses/>
+		<Info/>
+		<a href={`/${currentLocale}/p`}>estatica</a>
+		<section class="flex justify-around">
+			<News/>
+			<Characteristics/>
+		</section>
+		<Contact/>
+
+*/
+
+import { useTranslations, getContentfulLocale } from '../lib/i18n';
+import { getCourses } from '@/lib/contentful2';
+import type { Asset } from 'contentful';
+
+const lang = currentLocale || 'es';
+const t = useTranslations(lang);
+const contentfulLocale = getContentfulLocale(lang);
+
+//const news = await getNoticias(lang)
+const news2 = await getNoticias2(2, lang);
+console.log('Noticias')
+/* const new3 = news2.map(n => {
+	title: n.fields.titulo,
+	portada: n.fields.portada
+}) */
+
+// Datos por defecto si Contentful no está disponible
+const defaultHomePage = {
+  heroTitle: 'Centro de Formación Profesional',
+  heroSubtitle: 'Formación de calidad para tu futuro profesional',
+  aboutTitle: 'Sobre Nosotros',
+  aboutContent: 'Somos un centro especializado en formación profesional con más de 20 años de experiencia.',
+  heroImage: 'images/paisaje.jpg',
+};
+
+const pageData =  defaultHomePage;
+---
+
+<Layout title="Bienvenido a Cebem." description="Centro de formación profesional">
+	
+  
+	<main class="flex-1">
+	  <!-- Hero Section -->
+	  <section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		  <div class="grid lg:grid-cols-2 gap-12 items-center">
+			<div>
+			  <h1 class="text-4xl lg:text-6xl font-bold mb-6">
+				{pageData.heroTitle}
+			  </h1>
+			  <p class="text-xl lg:text-2xl mb-8 text-blue-100">
+				{pageData.heroSubtitle}
+			  </p>
+			  <div class="flex flex-col sm:flex-row gap-4">
+				<a 
+				  href="/en/courses" 
+				  class="bg-white text-blue-700 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-50 transition-colors text-center"
+				>
+				  View Courses
+				</a>
+				<a 
+				  href="#about-us" 
+				  class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-700 transition-colors text-center"
+				>
+				  Learn More
+				</a>
+			  </div>
+			</div>
+			<div class="hidden lg:block">
+			  {pageData.heroImage ? (
+				<img 
+				  src={`https:${pageData.heroImage}`}
+				  alt="Students in training"
+				  class="rounded-lg shadow-2xl"
+				/>
+			  ) : (
+				<div class="bg-blue-500 rounded-lg h-96 flex items-center justify-center">
+				  <svg class="w-32 h-32 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+				  </svg>
+				</div>
+			  )}
+			</div>
+		  </div>
+		</div>
+	  </section>
+  
+	  <!-- About Section -->
+	  <section id="about-us" class="py-20 bg-white">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		  <div class="grid lg:grid-cols-2 gap-12 items-center">
+			<div>
+			  <div class="bg-gray-200 rounded-lg h-96 flex items-center justify-center">
+				<svg class="w-32 h-32 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+				</svg>
+			  </div>
+			</div>
+			<div>
+			  <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+				{pageData.aboutTitle}
+			  </h2>
+			  <p class="text-lg text-gray-600 mb-8">
+				{pageData.aboutContent}
+			  </p>
+			  <div class="grid sm:grid-cols-3 gap-6">
+				<div class="text-center">
+				  <div class="text-3xl font-bold text-blue-600 mb-2">500+</div>
+				  <div class="text-gray-600">Students</div>
+				</div>
+				<div class="text-center">
+				  <div class="text-3xl font-bold text-blue-600 mb-2">25+</div>
+				  <div class="text-gray-600">Courses</div>
+				</div>
+				<div class="text-center">
+				  <div class="text-3xl font-bold text-blue-600 mb-2">95%</div>
+				  <div class="text-gray-600">Job Placement</div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </section>
+  
+	  <!-- Courses Section -->
+	  <section class="py-20 bg-gray-50">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		  <div class="text-center mb-12">
+			<h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+			  {t('courses.title')}
+			</h2>
+			<p class="text-lg text-gray-600 max-w-2xl mx-auto">
+			  Discover our comprehensive training programs designed to prepare you for today's job market.
+			</p>
+		  </div>
+  
+		  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+		<!-- 	 {courses.slice(0, 6).map((course) => (
+			  <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+				{course.image ? (
+				  <img 
+					src={`https:${course.image.fields.file.url}`}
+					alt={course.title}
+					class="w-full h-48 object-cover"
+				  />
+				) : (
+				  <div class="w-full h-48 bg-blue-100 flex items-center justify-center">
+					<svg class="w-16 h-16 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+					</svg>
+				  </div>
+				)}
+				<div class="p-6">
+				  <div class="flex items-center justify-between mb-2">
+					<span class="text-sm text-blue-600 font-semibold">{course.level}</span>
+					<span class="text-sm text-gray-500">{course.duration}</span>
+				  </div>
+				  <h3 class="text-xl font-bold text-gray-900 mb-3">{course.title}</h3>
+				  <p class="text-gray-600 mb-4">{course.description}</p>
+				  <a 
+					href={`/en/courses/${course.slug}`}
+					class="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold"
+				  >
+					More information
+					<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+					</svg>
+				  </a>
+				</div>
+			  </div>
+			))}  -->
+		  </div>
+  
+		  <div class="text-center">
+			<a 
+			  href="/en/courses"
+			  class="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors"
+			>
+			  {t('courses.viewAll')}
+			</a>
+		  </div>
+		</div>
+	  </section>
+  
+	  <!-- News Section -->
+	  <section class="py-20 bg-white">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		  <div class="text-center mb-12">
+			<h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+			  {t('news.title')}
+			</h2>
+			<p class="text-lg text-gray-600 max-w-2xl mx-auto">
+			  Stay up to date with the latest news and updates from our center.
+			</p>
+		  </div>
+  
+		  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+			 {news2.slice(0, 3).map((article) => (
+			  <article class="bg-gray-50 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+				{article.fields.portada ? (
+				  <img 
+					src={`https:${(article.fields.portada as Asset)?.fields?.file?.url}`}
+					alt={article.fields.titulo as string }
+					class="w-full h-48 object-cover"
+				  />
+				) : (
+				  <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+					<svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+					</svg>
+				  </div>
+				)}
+				<div class="p-6">
+				  <div class="text-sm text-gray-500 mb-2">
+					{new Date(article.fields.fechaPublicacion as string).toLocaleDateString('es-ES', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+				  </div>
+				  <h3 class="text-xl font-bold text-gray-900 mb-3">{article.fields.titulo}</h3>
+				  <p class="text-gray-600 mb-4">{article.fields.contenido}</p>
+				  <a 
+					href={`/es/news/${article.fields.slug}`}
+					class="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold"
+				  >
+					{t('news.readMore')}
+					<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+					</svg>
+				  </a>
+				</div>
+			  </article>
+			))} 
+		  </div>
+  
+		  <div class="text-center">
+			<a 
+			  href="/en/news"
+			  class="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors"
+			>
+			  {t('news.viewAll')}
+			</a>
+		  </div>
+		</div>
+	  </section>
+	</main>
+  
+	
+</Layout>
+
+<style>
+	/* main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+	.astro-a {
+		position: absolute;
+		top: -32px;
+		left: 50%;
+		transform: translatex(-50%);
+		width: 220px;
+		height: auto;
+		z-index: -1;
+	}
+	h1 {
+		font-size: 4rem;
+		font-weight: 700;
+		line-height: 1;
+		text-align: center;
+		margin-bottom: 1em;
+	}
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+	.instructions {
+		margin-bottom: 2rem;
+		border: 1px solid rgba(var(--accent-light), 25%);
+		background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
+		padding: 1.5rem;
+		border-radius: 8px;
+	}
+	.instructions code {
+		font-size: 0.8em;
+		font-weight: bold;
+		background: rgba(var(--accent-light), 12%);
+		color: rgb(var(--accent-light));
+		border-radius: 4px;
+		padding: 0.3em 0.4em;
+	}
+	.instructions strong {
+		color: rgb(var(--accent-light));
+	}
+	.link-card-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+		gap: 2rem;
+		padding: 0;
+	} */
+</style>

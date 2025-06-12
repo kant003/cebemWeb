@@ -1,0 +1,44 @@
+---
+// src/components/Testimonials.astro
+const testimonials = [
+    {
+        text: "La formación que ofrecen ha cambiado mi carrera profesional por completo. Los profesores son excelentes y el contenido muy actualizado.",
+        author: "Laura Martínez",
+        position: "Directora de Marketing Digital",
+        company: "MediaTech",
+        stars: 5
+    },
+    {
+        text: "Los cursos son muy completos y prácticos. Me ayudaron a conseguir el trabajo que siempre quise en el sector tecnológico.",
+        author: "Carlos Ruiz",
+        position: "Desarrollador Full Stack",
+        company: "WebSolutions",
+        stars: 5
+    },
+    {
+        text: "Gracias a la formación, conseguí mi trabajo soñado. La metodología es excelente y muy práctica.",
+        author: "Ana Pérez",
+        position: "Analista de Datos",
+        company: "DataInsights",
+        stars: 5
+    }
+];
+---
+
+<section class="section testimonials">
+    <div class="container">
+        <h2 class="section-title text-center animate-on-scroll">Testimonios de Nuestros Alumnos</h2>
+        <p class="text-center animate-on-scroll" style="margin-bottom: 48px; color: #4a5568;">Descubre lo que dicen nuestros estudiantes sobre su experiencia</p>
+        <div class="grid grid-3">
+            {testimonials.map((testimonial) => (
+                <div class="testimonial-card animate-on-scroll">
+                    <div class="testimonial-stars">{"★".repeat(testimonial.stars)}</div>
+                    <p class="testimonial-text">{testimonial.text}</p>
+                    <p class="testimonial-author">{testimonial.author}</p>
+                    <p class="testimonial-position">{testimonial.position}</p>
+                    <p class="testimonial-company">🏢 {testimonial.company}</p>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>

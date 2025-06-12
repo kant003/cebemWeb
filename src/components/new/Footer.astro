@@ -1,0 +1,82 @@
+---
+// src/components/Footer.astro
+const footerLinks = {
+    aboutUs: [
+        { text: "Quiénes somos", href: "#" },
+        { text: "Nuestro equipo", href: "#" },
+        { text: "Metodología", href: "#" },
+        { text: "Contacto", href: "#" }
+    ],
+    courses: [
+        { text: "Grado Superior", href: "#" },
+        { text: "Grado Medio", href: "#" },
+        { text: "Cursos Especializados", href: "#" },
+        { text: "Formación a Empresas", href: "#" }
+    ],
+    info: [
+        { text: "Preguntas frecuentes", href: "#" },
+        { text: "Política de privacidad", href: "#" },
+        { text: "Términos y condiciones", href: "#" },
+        { text: "Política de cookies", href: "#" }
+    ]
+};
+
+const socialIcons = [
+    { icon: "f", href: "#" },
+    { icon: "t", href: "#" },
+    { icon: "in", href: "#" },
+    { icon: "ig", href: "#" },
+    { icon: "yt", href: "#" }
+];
+---
+
+<footer>
+    <div class="container">
+        <div class="footer-top">
+            <div class="footer-info">
+                <a href="#" class="footer-logo">CEBEM</a>
+                <p class="footer-text">Centro Autorizado y Concertado por la Consejería de Educación. Formamos profesionales del futuro con la mejor calidad educativa.</p>
+                <p class="footer-contact">📧 secretaria@cebem.net</p>
+                <p class="footer-contact">📞 986 419899</p>
+                <p class="footer-contact">📍 Vía Hispanidade, 33 Vigo 36203</p>
+                <div class="footer-social">
+                    {socialIcons.map((social) => (
+                        <a href={social.href} class="social-icon">{social.icon}</a>
+                    ))}
+                </div>
+            </div>
+            <div class="footer-links-column">
+                <h3 class="footer-title">Sobre Nosotros</h3>
+                <ul class="footer-links">
+                    {footerLinks.aboutUs.map((link) => (
+                        <li><a href={link.href}>{link.text}</a></li>
+                    ))}
+                </ul>
+            </div>
+            <div class="footer-links-column">
+                <h3 class="footer-title">Cursos</h3>
+                <ul class="footer-links">
+                    {footerLinks.courses.map((link) => (
+                        <li><a href={link.href}>{link.text}</a></li>
+                    ))}
+                </ul>
+            </div>
+            <div class="footer-links-column">
+                <h3 class="footer-title">Información</h3>
+                <ul class="footer-links">
+                    {footerLinks.info.map((link) => (
+                        <li><a href={link.href}>{link.text}</a></li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 CEBEM Formación. Todos los derechos reservados.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Política de privacidad</a>
+                <a href="#">Términos de uso</a>
+                <a href="#">Política de cookies</a>
+            </div>
+        </div>
+    </div>
+</footer>
